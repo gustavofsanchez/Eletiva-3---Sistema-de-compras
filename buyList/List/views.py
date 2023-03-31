@@ -1,17 +1,22 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
-from List.models import Product, Category, List
+from List.models import Product, Category, List, List_product
+from List.models import Recipt, TagRecipt, ProductRecipt
 
 # Create your views here.
 def index(request):
     products = Product.objects.all
     lists = List.objects.all
     categories = Category.objects.all
+    tagRecipts = TagRecipt.objects.all
+    recipts = Recipt.objects.all
     context = {
         'prods': products,
         'lists': lists,
         'categories': categories,
+        'tagRecipts': tagRecipts,
+        'recipts': recipts,
     }
     return render(request, 'index.html', context)
 
@@ -70,3 +75,79 @@ def edit_list(request):
         list.save()
     return HttpResponseRedirect('/') 
 
+def add_prod_in_list(request):
+    if request.method == 'POST':
+        list = List.objects.get(id = request.POST['idList'])
+        prod = Product.objects.get(id = request.POST['idProd'])
+        quantity = request.POST['quantity']
+        second_option = Product.objects.get(id = request.POST['idSecondOption'])
+        importance = request.POST['importance']
+        data = List_product(
+            product = prod,
+            list = list,
+            quantity = quantity,
+            product_second_option = second_option,
+            importance = importance,
+        )
+        data.save()
+    return HttpResponseRedirect('/')
+
+
+def show_list(request,pk):
+    list_products = List_product.objects.filter(list__id=pk)
+    context = {
+        'list_products': list_products,
+    }
+    return render(request, 'showlist.html', context)
+
+def add_recipt(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        print(name)
+        description = request.POST['description']
+        tagCategory = TagRecipt.objects.get(id = request.POST['tagCategory'])
+        data = Recipt(
+            name = name,
+            description = description,
+            tagCategory = tagCategory
+        )
+        data.save()
+    return HttpResponseRedirect('/')
+
+def delete_recipt(request, pk):
+    #if request.method == 'POST':
+    recipt = Recipt.objects.get(id = pk)
+    recipt.delete()
+    return HttpResponseRedirect('/') 
+
+def edit_recipt(request):
+    if request.method == 'POST':
+        recipt = Recipt.objects.get(id = request.POST['id'])
+        recipt.name = request.POST['name']
+        recipt.description = request.POST['description']
+        tagCategory = TagRecipt.objects.get(id = request.POST['tagCategory'])
+        recipt.tagCategory = tagCategory
+        recipt.save()
+    return HttpResponseRedirect('/')
+
+
+def add_prod_in_recipt(request):
+    if request.method == 'POST':
+        recipt = Recipt.objects.get(id = request.POST['idRecipt'])
+        prod = Product.objects.get(id = request.POST['idProd'])
+        quantity = request.POST['quantity']
+        data = ProductRecipt(
+            product = prod,
+            recipt = recipt,
+            quantity = quantity,
+        )
+        data.save()
+    return HttpResponseRedirect('/')
+
+
+def show_recipt(request,pk):
+    reciptProducts = ProductRecipt.objects.filter(recipt__id=pk)
+    context = {
+        'reciptProducts': reciptProducts,
+    }
+    return render(request, 'showRecipt.html', context)

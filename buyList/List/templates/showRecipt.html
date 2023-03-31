@@ -1,0 +1,7 @@
+Products in Recipt ---------------------------
+<ul>
+{% for prod in reciptProducts %}
+    <li> {{prod.product.name}} - {{prod.quantity}}
+     </li>
+{% endfor %}
+</ul>

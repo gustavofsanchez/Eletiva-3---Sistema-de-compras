@@ -73,14 +73,111 @@ Adicionar:
     </form>
     
 Editar:
-    <form action="/edit_list/" method="post">
-        {% csrf_token %}
-        
-        <label for="id"> Id:</label>
-        <input id="id" type="text" name="id" value="">
+<form action="/edit_list/" method="post">
+    {% csrf_token %}
     
+    <label for="id"> Id:</label>
+    <input id="id" type="text" name="id" value="">
+
+    <label for="name"> Name:</label>
+    <input id="name" type="text" name="name" value="">
+
+    <input type="submit" value="Submit">
+</form>
+
+
+Add Product in List:
+
+<form action="/add_prod_in_list/" method="post">
+    {% csrf_token %}
+    
+    <label for="idList"> idList:</label>
+    <input id="idList" type="text" name="idList" value="">
+
+    <label for="idProd"> idProd:</label>
+    <input id="idProd" type="text" name="idProd" value="">
+
+    <label for="quantity"> Quantity:</label>
+    <input id="quantity" type="text" name="quantity" value="">
+
+    <label for="idSecondOption"> idSecondOption:</label>
+    <input id="idSecondOption" type="text" name="idSecondOption" value="">
+    
+    <label for="importance"> importance:</label>
+    <input id="importance" type="text" name="importance" value="">
+
+    <input type="submit" value="Submit">
+</form>
+
+
+
+Receitas ---------------------------
+<ul>
+    {% for recipt in recipts %}
+        <li> {{recipt.id}} {{recipt.name}} - {{recipt.description}} - {{recipt.category}}
+            <a class="btn btn-outline-danger" href="{% url 'delete_recipt' pk=recipt.id %}">Delete It</a>
+        </li>
+    {% endfor %}
+    </ul>
+    
+    Adicionar:
+    <form action="/add_recipt/" method="post">
+        {% csrf_token %}
         <label for="name"> Name:</label>
         <input id="name" type="text" name="name" value="">
+        
+        <label for="description">Description: </label>
+        <input id="description" type="text" name="description" value="">
+    
+        <select class="form-control mb-4" name="tagCategory">
+            <option selected disabled>Select Category</option>
+    
+            {% for tag in tagRecipts %}
+            <option value="{{tag.id}}">{{tag.name}}</option>
+            {% endfor %}
+    
+        </select>
     
         <input type="submit" value="Submit">
     </form>
+
+    
+Editar:
+<form action="/edit_recipt/" method="post">
+    {% csrf_token %}
+    
+    <label for="id"> Id:</label>
+    <input id="id" type="text" name="id" value="">
+
+    <label for="name"> Name:</label>
+    <input id="name" type="text" name="name" value="">
+    
+    <label for="description">Description: </label>
+    <input id="description" type="text" name="description" value="">
+
+    <select class="form-control mb-4" name="tagCategory">
+        <option selected disabled>Select Category</option>
+
+        {% for tag in tagRecipts %}
+        <option value="{{tag.id}}">{{tag.name}}</option>
+        {% endfor %}
+
+    </select>
+    <input type="submit" value="Submit">
+</form>
+Add Product in Recipt:
+
+<form action="/add_prod_in_recipt/" method="post">
+    {% csrf_token %}
+    
+    <label for="idRecipt"> idRecipt:</label>
+    <input id="idRecipt" type="text" name="idRecipt" value="">
+
+    <label for="idProd"> idProd:</label>
+    <input id="idProd" type="text" name="idProd" value="">
+
+    <label for="quantity"> Quantity:</label>
+    <input id="quantity" type="text" name="quantity" value="">
+
+    <input type="submit" value="Submit">
+</form>

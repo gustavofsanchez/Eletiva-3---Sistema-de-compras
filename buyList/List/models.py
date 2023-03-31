@@ -36,3 +36,35 @@ class List(models.Model):
     
     def __str__(self):
         return self.name
+    
+class List_product(models.Model):
+    product = models.ForeignKey(Product,related_name='prod', on_delete=models.SET_NULL, null=True)
+    list = models.ForeignKey(List, on_delete=models.SET_NULL, null=True)
+    quantity = models.IntegerField()
+    product_second_option = models.ForeignKey(Product, related_name='secondOption', on_delete=models.SET_NULL, null=True)
+    importance = models.IntegerField()
+
+    def __str__(self):
+        return self.product.name  + " - " +  self.list.name
+
+class TagRecipt(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+    
+class Recipt(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=500)
+    tagCategory = models.ForeignKey(TagRecipt, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name
+
+class ProductRecipt(models.Model):
+    product = models.ForeignKey(Product,related_name='prod_in_recipe', on_delete=models.SET_NULL, null=True)
+    recipt = models.ForeignKey(Recipt, on_delete=models.SET_NULL, null=True)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return self.product.name  + " - " +  self.recipt.name

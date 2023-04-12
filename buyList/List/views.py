@@ -20,6 +20,29 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+def lists(request):
+    lists = List.objects.all
+    context = {
+        'lists': lists,
+    }
+    return render(request, 'lists.html', context)
+
+
+def recipes(request):
+    products = Product.objects.all
+    lists = List.objects.all
+    categories = Category.objects.all
+    tagRecipts = TagRecipt.objects.all
+    recipts = Recipt.objects.all
+    context = {
+        'prods': products,
+        'lists': lists,
+        'categories': categories,
+        'tagRecipts': tagRecipts,
+        'recipts': recipts,
+    }
+    return render(request, 'recipes.html', context)
+
 def add_product(request):
     # inserir no meu banco de dados
     if request.method == 'POST':
@@ -59,13 +82,13 @@ def add_list(request):
             name = name,
         )
         data.save()
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/lists/')
 
 def delete_list(request, pk):
     #if request.method == 'POST':
     list = List.objects.get(id = pk)
     list.delete()
-    return HttpResponseRedirect('/') 
+    return HttpResponseRedirect('/lists/') 
 
 
 def edit_list(request):
@@ -73,7 +96,7 @@ def edit_list(request):
         list = List.objects.get(id = request.POST['id'])
         list.name = request.POST['name']
         list.save()
-    return HttpResponseRedirect('/') 
+    return HttpResponseRedirect('/lists/') 
 
 def add_prod_in_list(request):
     if request.method == 'POST':

@@ -1,7 +1,11 @@
-Products in Recipt ---------------------------
-<ul>
-{% for prod in reciptProducts %}
-    <li> {{prod.product.name}} - {{prod.quantity}}
-     </li>
-{% endfor %}
-</ul>
+{% extends 'main.html' %}
+
+{% block content %}
+    Products in Recipt ---------------------------
+    <ul>
+    {% for prod in reciptProducts %}
+        <li> {{prod.product.name}} - {{prod.quantity}}</li>
+    {% endfor %}
+    </ul>
+
+{% endblock content %}

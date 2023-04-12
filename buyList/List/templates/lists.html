@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+
+{% block content %}
+New List: <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalList" onclick="showModal()"><i class="fa fa-plus"></i></button>
+<ul>
+    {% for list in lists %}
+        <li> <a href="{% url 'show_list' pk=list.id %}">{{list.id}} {{list.name}} </a> - 
+            <a class="btn btn-outline-danger" href="{% url 'delete_list' pk=list.id %}">Delete It</a>
+        </li>
+    {% endfor %}
+    </ul>
+    
+Editar:
+<form action="/edit_list/" method="post">
+    {% csrf_token %}
+    
+    <label for="id"> Id:</label>
+    <input id="id" type="text" name="id" value="">
+
+    <label for="name"> Name:</label>
+    <input id="name" type="text" name="name" value="">
+
+    <input type="submit" value="Submit">
+</form>
+
+<div class="modal fade" id="ModalList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New List</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="/add_list/" method="post">
+                {% csrf_token %}
+                <label for="name"> Name:</label>
+                <input id="name" type="text" name="name" value="">
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock content %}

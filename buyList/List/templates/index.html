@@ -1,3 +1,7 @@
+{% extends 'main.html' %}
+
+{% block content %}
+New Product: <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalProduct" onclick="showModal()"><i class="fa fa-plus"></i></button><p></p>
 
 Products ---------------------------
 <ul>
@@ -8,26 +12,6 @@ Products ---------------------------
 {% endfor %}
 </ul>
 
-Adicionar:
-<form action="/add_product/" method="post">
-    {% csrf_token %}
-    <label for="name"> Name:</label>
-    <input id="name" type="text" name="name" value="">
-    
-    <label for="description">Description: </label>
-    <input id="description" type="text" name="description" value="">
-
-    <select class="form-control mb-4" name="category">
-        <option selected disabled>Select Category</option>
-
-        {% for cat in categories %}
-        <option value="{{cat.id}}">{{cat.name}}</option>
-        {% endfor %}
-
-    </select>
-
-    <input type="submit" value="Submit">
-</form>
 
 Editar:
 <form action="/edit_product/" method="post">
@@ -52,39 +36,6 @@ Editar:
     </select>
     <input type="submit" value="Submit">
 </form>
-
-
-Lists ---------------------------
-
-<ul>
-    {% for list in lists %}
-        <li> {{list.id}} {{list.name}} 
-            <a class="btn btn-outline-danger" href="{% url 'delete_list' pk=list.id %}">Delete It</a>
-        </li>
-    {% endfor %}
-    </ul>
-    
-Adicionar:
-    <form action="/add_list/" method="post">
-        {% csrf_token %}
-        <label for="name"> Name:</label>
-        <input id="name" type="text" name="name" value="">
-        <input type="submit" value="Submit">
-    </form>
-    
-Editar:
-<form action="/edit_list/" method="post">
-    {% csrf_token %}
-    
-    <label for="id"> Id:</label>
-    <input id="id" type="text" name="id" value="">
-
-    <label for="name"> Name:</label>
-    <input id="name" type="text" name="name" value="">
-
-    <input type="submit" value="Submit">
-</form>
-
 
 Add Product in List:
 
@@ -111,60 +62,6 @@ Add Product in List:
 
 
 
-Receitas ---------------------------
-<ul>
-    {% for recipt in recipts %}
-        <li> {{recipt.id}} {{recipt.name}} - {{recipt.description}} - {{recipt.category}}
-            <a class="btn btn-outline-danger" href="{% url 'delete_recipt' pk=recipt.id %}">Delete It</a>
-        </li>
-    {% endfor %}
-    </ul>
-    
-    Adicionar:
-    <form action="/add_recipt/" method="post">
-        {% csrf_token %}
-        <label for="name"> Name:</label>
-        <input id="name" type="text" name="name" value="">
-        
-        <label for="description">Description: </label>
-        <input id="description" type="text" name="description" value="">
-    
-        <select class="form-control mb-4" name="tagCategory">
-            <option selected disabled>Select Category</option>
-    
-            {% for tag in tagRecipts %}
-            <option value="{{tag.id}}">{{tag.name}}</option>
-            {% endfor %}
-    
-        </select>
-    
-        <input type="submit" value="Submit">
-    </form>
-
-    
-Editar:
-<form action="/edit_recipt/" method="post">
-    {% csrf_token %}
-    
-    <label for="id"> Id:</label>
-    <input id="id" type="text" name="id" value="">
-
-    <label for="name"> Name:</label>
-    <input id="name" type="text" name="name" value="">
-    
-    <label for="description">Description: </label>
-    <input id="description" type="text" name="description" value="">
-
-    <select class="form-control mb-4" name="tagCategory">
-        <option selected disabled>Select Category</option>
-
-        {% for tag in tagRecipts %}
-        <option value="{{tag.id}}">{{tag.name}}</option>
-        {% endfor %}
-
-    </select>
-    <input type="submit" value="Submit">
-</form>
 Add Product in Recipt:
 
 <form action="/add_prod_in_recipt/" method="post">
@@ -181,3 +78,42 @@ Add Product in Recipt:
 
     <input type="submit" value="Submit">
 </form>
+
+
+<div class="modal fade" id="ModalProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="/add_product/" method="post">
+                {% csrf_token %}
+                <label for="name"> Name:</label>
+                <input id="name" type="text" name="name" value=""><p></p>
+                
+                <label for="description">Description: </label>
+                <input id="description" type="text" name="description" value=""><p></p>
+            
+                <select class="form-control mb-4" name="category">
+                    <option selected disabled>Select Category</option>
+            
+                    {% for cat in categories %}
+                    <option value="{{cat.id}}">{{cat.name}}</option>
+                    {% endfor %}
+            
+                </select>
+            
+                <input type="submit" value="Submit">
+            </form>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+
+{% block content %}
+New Recipt: <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalRecipt" onclick="showModal()"><i class="fa fa-plus"></i></button>
+<ul>
+    {% for recipt in recipts %}
+        <li> <a href="{% url 'show_recipt' recipt.id %}"> {{recipt.name}} - {{recipt.description}} - {{recipt.category}}</a>
+            <a class="btn btn-outline-danger" href="{% url 'delete_recipt' pk=recipt.id %}">Delete It</a>
+        </li>
+    {% endfor %}
+    </ul>
+    
+Editar:
+<form action="/edit_recipt/" method="post">
+    {% csrf_token %}
+    
+    <label for="id"> Id:</label>
+    <input id="id" type="text" name="id" value="">
+
+    <label for="name"> Name:</label>
+    <input id="name" type="text" name="name" value="">
+    
+    <label for="description">Description: </label>
+    <input id="description" type="text" name="description" value="">
+
+    <select class="form-control mb-4" name="tagCategory">
+        <option selected disabled>Select Category</option>
+
+        {% for tag in tagRecipts %}
+        <option value="{{tag.id}}">{{tag.name}}</option>
+        {% endfor %}
+
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+<div class="modal fade" id="ModalRecipt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New Recipt</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="/add_recipt/" method="post">
+                {% csrf_token %}
+                <label for="name"> Name:</label>
+                <input id="name" type="text" name="name" value=""><p>
+                <label for="description">Description: </label>
+                <input id="description" type="text" name="description" value=""><p>
+                <select class="form-control mb-4" name="tagCategory">
+                    <option selected disabled>Select Category</option>
+                    {% for tag in tagRecipts %}
+                    <option value="{{tag.id}}">{{tag.name}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

@@ -1,7 +1,14 @@
-Products ---------------------------
-<ul>
-{% for prod in list_products %}
-    <li> {{prod.product.name}} - {{prod.quantity}} - {{prod.product_second_option.name}}
-     </li>
-{% endfor %}
-</ul>
+{% extends 'main.html' %}
+
+{% block content %}
+
+    Products ---------------------------
+    <ul>
+    {% for prod in list_products %}
+        <li> {{prod.product.name}} - {{prod.quantity}} - {{prod.product_second_option.name}}
+        </li>
+    {% endfor %}
+    </ul>
+
+
+{% endblock content %}

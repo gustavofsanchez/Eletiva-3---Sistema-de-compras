@@ -98,9 +98,9 @@ def edit_list(request):
         list.save()
     return HttpResponseRedirect('/lists/') 
 
-def add_prod_in_list(request):
+def add_prod_in_list(request,pk):
     if request.method == 'POST':
-        list = List.objects.get(id = request.POST['idList'])
+        list = List.objects.get(id = pk)
         prod = Product.objects.get(id = request.POST['idProd'])
         quantity = request.POST['quantity']
         second_option = Product.objects.get(id = request.POST['idSecondOption'])
@@ -113,13 +113,16 @@ def add_prod_in_list(request):
             importance = importance,
         )
         data.save()
-    return HttpResponseRedirect('/')
-
+    return HttpResponseRedirect('/show_list/'+str(pk)+'/')
 
 def show_list(request,pk):
     list_products = List_product.objects.filter(list__id=pk)
+    list = List.objects.get(id=pk)
+    products = Product.objects.all()
     context = {
         'list_products': list_products,
+        'list':list,
+        'products': products,
     }
     return render(request, 'showlist.html', context)
 
@@ -154,9 +157,9 @@ def edit_recipt(request):
     return HttpResponseRedirect('/')
 
 
-def add_prod_in_recipt(request):
+def add_prod_in_recipt(request, pk):
     if request.method == 'POST':
-        recipt = Recipt.objects.get(id = request.POST['idRecipt'])
+        recipt = Recipt.objects.get(id = pk)
         prod = Product.objects.get(id = request.POST['idProd'])
         quantity = request.POST['quantity']
         data = ProductRecipt(
@@ -165,12 +168,15 @@ def add_prod_in_recipt(request):
             quantity = quantity,
         )
         data.save()
-    return HttpResponseRedirect('/')
-
+    return HttpResponseRedirect('/showRecipt/'+str(pk)+'/')
 
 def show_recipt(request,pk):
     reciptProducts = ProductRecipt.objects.filter(recipt__id=pk)
+    recipe = Recipt.objects.get(id = pk)
+    products = Product.objects.all()
     context = {
         'reciptProducts': reciptProducts,
+        'recipe': recipe,
+        'products': products,
     }
     return render(request, 'showRecipt.html', context)

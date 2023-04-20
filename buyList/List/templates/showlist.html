@@ -2,7 +2,8 @@
 
 {% block content %}
 
-    Products ---------------------------
+    {{list.name}} - Add product: <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalProduct" onclick="showModal()"><i class="fa fa-plus"></i></button><p></p>
+
     <ul>
     {% for prod in list_products %}
         <li> {{prod.product.name}} - {{prod.quantity}} - {{prod.product_second_option.name}}
@@ -10,5 +11,48 @@
     {% endfor %}
     </ul>
 
-
+    <div class="modal fade" id="ModalProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Product in List</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form action="/add_prod_in_list/{{list.id}}/" method="post">
+                    {% csrf_token %}
+                    <select class="form-control mb-4" name="idProd">
+                        <option selected disabled>Select Product</option>
+                
+                        {% for prod in products %}
+                        <option value="{{prod.id}}">{{prod.name}}</option>
+                        {% endfor %}
+                
+                    </select>
+                    
+                    <label for="name"> Quantity:</label>
+                    <input id="quantity" type="text" name="quantity" value=""><p></p>
+                    
+                    <select class="form-control mb-4" name="idSecondOption">
+                        <option selected disabled>Second Option</option>
+                
+                        {% for prod in products %}
+                        <option value="{{prod.id}}">{{prod.name}}</option>
+                        {% endfor %}
+                
+                    </select>
+                    <label for="name"> Importance:</label>
+                    <input id="importance" type="text" name="importance" value=""><p></p>
+                    
+                    <input type="submit" value="Submit">
+                </form>
+    
+    
+    
+            </div>
+          </div>
+        </div>
+    </div>
 {% endblock content %}

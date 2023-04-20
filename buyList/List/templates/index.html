@@ -37,49 +37,6 @@ Editar:
     <input type="submit" value="Submit">
 </form>
 
-Add Product in List:
-
-<form action="/add_prod_in_list/" method="post">
-    {% csrf_token %}
-    
-    <label for="idList"> idList:</label>
-    <input id="idList" type="text" name="idList" value="">
-
-    <label for="idProd"> idProd:</label>
-    <input id="idProd" type="text" name="idProd" value="">
-
-    <label for="quantity"> Quantity:</label>
-    <input id="quantity" type="text" name="quantity" value="">
-
-    <label for="idSecondOption"> idSecondOption:</label>
-    <input id="idSecondOption" type="text" name="idSecondOption" value="">
-    
-    <label for="importance"> importance:</label>
-    <input id="importance" type="text" name="importance" value="">
-
-    <input type="submit" value="Submit">
-</form>
-
-
-
-Add Product in Recipt:
-
-<form action="/add_prod_in_recipt/" method="post">
-    {% csrf_token %}
-    
-    <label for="idRecipt"> idRecipt:</label>
-    <input id="idRecipt" type="text" name="idRecipt" value="">
-
-    <label for="idProd"> idProd:</label>
-    <input id="idProd" type="text" name="idProd" value="">
-
-    <label for="quantity"> Quantity:</label>
-    <input id="quantity" type="text" name="quantity" value="">
-
-    <input type="submit" value="Submit">
-</form>
-
-
 <div class="modal fade" id="ModalProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

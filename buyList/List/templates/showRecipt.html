@@ -1,11 +1,41 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    Products in Recipt ---------------------------
+{{recipe.name}} - Add product: <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#ModalProduct" onclick="showModal()"><i class="fa fa-plus"></i></button><p></p>
     <ul>
     {% for prod in reciptProducts %}
         <li> {{prod.product.name}} - {{prod.quantity}}</li>
     {% endfor %}
     </ul>
 
+    <div class="modal fade" id="ModalProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Product in Recipe</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form action="/add_prod_in_recipt/{{recipe.id}}/" method="post">
+                    {% csrf_token %}
+                    <select class="form-control mb-4" name="idProd">
+                        <option selected disabled>Select Product</option>
+                
+                        {% for prod in products %}
+                        <option value="{{prod.id}}">{{prod.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="name"> Quantity:</label>
+                    <input id="quantity" type="text" name="quantity" value=""><p></p>
+                    <input type="submit" value="Submit">
+                </form>
+    
+    
+    
+            </div>
+          </div>
+        </div>
+    </div>
 {% endblock content %}
